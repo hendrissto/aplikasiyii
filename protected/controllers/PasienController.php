@@ -1,0 +1,211 @@
+<?php
+
+class PasienController extends Controller
+{
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 */
+	public $layout='//layouts/pendaftaran';
+
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
+		);
+	}
+
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update'),
+				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete'),
+				'users'=>array('admin'),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);
+	}
+
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionView($id)
+	{
+		$this->render('view',array(
+			'model'=>$this->loadModel($id),
+		));
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionCreate()
+	{
+		$model=new Pasien;
+		$periksa = new PeriksaPasien;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Pasien']))
+		{
+			$model->attributes=$_POST['Pasien'];
+			$command = Yii::app()->db->createCommand('select max(no_rm) as no_rm from pasien')
+					->queryRow();
+			
+			$model->no_rm=$command['no_rm']+1;
+			
+			if($model->save()){
+			$id_p = Yii::app()->db->createCommand('select max(id_periksa) as id_periksa from periksa_pasien')
+				->queryRow();
+			if($id_p['id_periksa'] == null){
+				$periksa->id_periksa = 1;
+			}else{
+				$periksa->id_periksa = $id_p['id_periksa'] + 1;
+			}
+			
+			$periksa->no_rm = $command['no_rm']+1;
+			$periksa->status = "belum periksa";
+			$periksa->save();
+			
+			}
+			Yii::app()->user->setFlash('success', "Data Berhasil Disimpan");
+				$this->redirect(array('index','id'=>$model->no_identitas));
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($oid)
+	{
+		$model=$this->loadModel($oid);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Pasien']))
+		{
+			$model->attributes=$_POST['Pasien'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->no_identitas));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($oid, $token)
+	{
+				$cek = inc::enkrip($oid); // enkrip id agar sama dengan token
+				if($cek == $token)  //cek dulu sama apa engga token sama id
+				{
+					
+					try								// kenapa di try dulu , soal nya pake foreign key , kalo ada id ini  yang terkait sama table lain ga bisa didelete , kalo ga di try dulu pasti error keluar nya :)
+					{
+						$model = $this->loadModel($oid);
+						if($model->delete())
+						{
+							Yii::app()->user->setFlash('success' , 'Data telah dihapus!');
+							$this->redirect(array('index'));
+						}
+					}catch (Exception $e){
+							Yii::app()->user->setFlash('danger' , 'Data gagal dihapus! data ini masih digunakan dengan data lain');
+							$this->redirect(array('index'));
+					}
+				}else{
+					throw new CHttpException(404, 'Halaman tidak ditemukan!');
+				}
+		
+
+		
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+	$user =	Yii::app()->db->createCommand('SELECT * FROM pasien');
+		$dataProvider=new CActiveDataProvider('Pasien');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider, 'user'=>$user
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionAdmin()
+	{
+		$model=new Pasien('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Pasien']))
+			$model->attributes=$_GET['Pasien'];
+
+		$this->render('admin',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return Pasien the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id)
+	{
+		$model=Pasien::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+
+	/**
+	 * Performs the AJAX validation.
+	 * @param Pasien $model the model to be validated
+	 */
+	protected function performAjaxValidation($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='pasien-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
+}
