@@ -178,4 +178,5 @@ class TarifTindakanController extends Controller
 	public function actionPage(){
 		$this->renderPartial('myPage');
 	}
+	/**olgha magrisa */
 }
