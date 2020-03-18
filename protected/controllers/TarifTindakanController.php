@@ -179,4 +179,9 @@ class TarifTindakanController extends Controller
 		$this->renderPartial('myPage');
 	}
 	/**olgha magrisa */
+
+	public function actionHendriGanteng(){
+		$this->renderPartial('myPage');
+	}
+	/**Aa ganteng */
 }

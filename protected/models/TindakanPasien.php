@@ -30,7 +30,7 @@ class TindakanPasien extends CActiveRecord
 			array(' id_tindakan', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array(' id_tindakan, tanggal', 'safe', 'on'=>'search'),
+			array('id_tindakan, tanggal', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -28,7 +28,7 @@ class TindakanPasienController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','hapustindakan'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,7 +36,7 @@ class TindakanPasienController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -166,9 +166,9 @@ class TindakanPasienController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($oid)
+	public function actionDelete($id_tindakan_pasien)
 	{
-		$this->loadModel($oid)->delete();
+		$this->loadModel($id_tindakan_pasien)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -226,6 +226,14 @@ class TindakanPasienController extends Controller
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
+		}
+	}
+
+	public function actionHapusTindakan($id_tindakan_pasien) {
+		if (TindakanPasien::model()->deleteByPk($id_tindakan_pasien)) {
+			$this->redirect(array('tindakanPasien'));
+		} else {
+			throw new CHttpException(404, 'Data gagal dihapus');
 		}
 	}
 }
