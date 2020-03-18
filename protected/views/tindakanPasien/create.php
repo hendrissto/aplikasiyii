@@ -60,7 +60,7 @@ $this->menu=array(
                 <td><?php echo $ml['tanggal']; ?></td>
                 <td><?php echo $ml['nama_tindakan']; ?></td>
                 <td><?php echo $ml['harga']; ?></td>
-                <td><?php echo CHtml::link(CHtml::encode("Delete"), array('hapustindakan', 'hapusTindakan' => $ml['id_tindakan_pasien'])); ?></td>
+                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['id_tindakan_pasien'],'data'=>$ml['id_periksa']))); ?></td>
                 <?php $total_harga=$total_harga + $ml['harga'];?>
             </tr>
             <?php endforeach; ?>

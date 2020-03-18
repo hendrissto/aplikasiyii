@@ -28,7 +28,7 @@ class TindakanPasienController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','hapustindakan'),
+				'actions'=>array('index','view','delete'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -76,7 +76,6 @@ class TindakanPasienController extends Controller
 				->select()
 				->from('tindakan_pasien tp')
 				->join('tindakan tn','tn.id_tindakan = tp.id_tindakan')
-				->join('tarif_tindakan tt','tt.id_tindakan = tn.id_tindakan')
 				->join('periksa_pasien pp','pp.id_periksa = tp.id_periksa')
 				->where('tp.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
 				->queryAll();
@@ -166,13 +165,26 @@ class TindakanPasienController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id_tindakan_pasien)
+	public function actionDelete($id,$data)
 	{
-		$this->loadModel($id_tindakan_pasien)->delete();
+		$tind = Yii::app()->db->createCommand()
+				->select()
+				->from('tindakan_pasien tp')
+				->join('tindakan tn','tn.id_tindakan = tp.id_tindakan')
+				->join('periksa_pasien pp','pp.id_periksa = tp.id_periksa')
+				->where('tp.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+				->queryAll();
+		try {
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->loadModel($id)->delete();
+	
+			return $this->redirect('index.php?r=tindakanPasien/create/oid/'.$data, array('tindakan'=> $tind));
+	
+		} catch(CDbException $e) {
+	
+			echo 'Please remove this category from articles to delete this category.';
+	
+		}
 	}
 
 	/**

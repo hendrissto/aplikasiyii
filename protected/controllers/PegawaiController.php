@@ -39,10 +39,13 @@
 		
 		public function actionIndex()
 		{
-			$model=new Pegawai();
+			$model=$model=Yii::app()->db->createCommand()
+					->select()
+					->from('pegawai')
+					->queryAll();
 
 			$this->render('index',array(
-				'model'=>$model
+				'pegawai'=>$model
 			));
 		}
 		
