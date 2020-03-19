@@ -162,7 +162,6 @@ class TagihanController extends Controller
 					->join('periksa_pasien pp','pp.id_periksa = t.id_periksa')
 					->join('pasien p','p.no_rm = pp.no_rm')
 					->queryAll();
-					
 		$this->render('index',array(
 			'dataProvider'=>$command,
 		));
@@ -254,6 +253,10 @@ class TagihanController extends Controller
 					->where('r.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
 					->queryAll();
 
+		$bayar = Yii::app()->db->createCommand()
+					->select()
+					->from('tagihan')
+					->queryAll();
 		$cek_bayar = Yii::app()->db->createCommand('select max(id_pembayaran) as id_pembayaran from pembayaran')
 						->queryRow();					
 		
@@ -277,7 +280,7 @@ class TagihanController extends Controller
 		}
 
 		$this->render('cetak',array(
-			'ml'=>$ml, 'tindakan'=>$tindakan, 'pasien'=>$c, 'resep'=>$resep
+			'ml'=>$ml, 'tindakan'=>$tindakan, 'pasien'=>$c, 'resep'=>$resep, 'bayar'=>$bayar
 		));
 	}
 }

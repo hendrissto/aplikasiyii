@@ -39,7 +39,7 @@ $this->menu=array(
             <tr>
                 <td><?= $team['no_rm'] ?></td>
                 <td><?= $team['nama_pasien'] ?></td>
-                <td><?php if ($team['status'] == "lunas"){
+                <td><?php if ($team['status_bayar'] == "lunas"){
                     echo CHtml::link('<img style="width:50px; height:50px;" src="images/cetak.png"></img>' , array('/tagihan/cetak/oid/'.$team['id_periksa']));
                 }else{
                     echo CHtml::link('<img style="width:50px; height:50px;" src="images/bayar.png"></img>' , array('/tagihan/create/oid/'.$team['id_periksa']));
