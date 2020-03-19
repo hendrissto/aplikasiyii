@@ -92,13 +92,13 @@ class ResepController extends Controller
 				$tambah_tagihan=Tagihan::model()->findByPk($t['0']['no_tagihan']);
 				$tambah_tagihan->bayar_tagihan = ($a['0']['harga'] * $_POST['Resep']['jumlah']) + $t['0']['bayar_tagihan'];
 				$tambah_tagihan->id_periksa = $oid;
-				$tambah_tagihan->status = "belum lunas";
+				$tambah_tagihan->status_bayar = "belum lunas";
 				$tambah_tagihan->save();
 			}else{
 				$tagihan = new Tagihan;
 				$tagihan->bayar_tagihan = $a['0']['harga'] * $_POST['Resep']['jumlah'];
 				$tagihan->id_periksa = $oid;
-				$tagihan->status = "belum lunas";
+				$tagihan->status_bayar = "belum lunas";
 				$tagihan->save();
 			}
 
