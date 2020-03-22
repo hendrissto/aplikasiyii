@@ -2,9 +2,7 @@
 /* @var $this PemeriksaanController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Pemeriksaans',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create Pemeriksaan', 'url'=>array('create')),

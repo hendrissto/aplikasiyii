@@ -2,9 +2,7 @@
 /* @var $this TindakanController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Tindakans',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create Tindakan', 'url'=>array('create')),

@@ -37,6 +37,7 @@ class Pegawai extends CActiveRecord
 			// @todo Please remove those attributes that should not be searched.
 			array('id_pegawai, nama_pegawai, alamat_pegawai, no_telepon, username, password, jabatan', 'safe', 'on'=>'search'),
 			array('username','namavalidasi'),
+			array('id_pegawai','idpegawaivalidasi'),
 		);
 	}
 
@@ -131,12 +132,26 @@ class Pegawai extends CActiveRecord
 		foreach($data as $d){
 			if($this->$attribute==$d['username'])
 			{
-			$this->addError('username', 'Username sudah digunakan');
-			return false; 
+				$this->addError('username', 'Username sudah digunakan');
+				return false; 
 			}
 		}				
 		
 	}
 	
+	public function idpegawaivalidasi($attribute)
+	{
+		$data = Yii::app()->db->createCommand()
+				->select('id_pegawai')
+				->from('pegawai')
+				->queryAll();
+		foreach($data as $d){
+			if($this->$attribute==$d['id_pegawai']){
+				$this->addError('id_pegawai', 'ID Pegawai sudah digunakan');
+				return false;
+			}
+		}				
+		
+	}
 	
 }

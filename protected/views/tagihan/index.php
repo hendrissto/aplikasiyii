@@ -2,9 +2,7 @@
 /* @var $this TagihanController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Tagihans',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create Tagihan', 'url'=>array('create')),

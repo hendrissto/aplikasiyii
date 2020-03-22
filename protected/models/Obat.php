@@ -25,7 +25,7 @@ class Obat extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_obat, nama_obat, harga', 'required'),
+			array('nama_obat, harga', 'required'),
 			array('id_obat, harga', 'numerical', 'integerOnly'=>true),
 			array('nama_obat', 'length', 'max'=>50),
 			// The following rule is used by search().

@@ -2,9 +2,7 @@
 /* @var $this ResepController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Reseps',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create Resep', 'url'=>array('create')),

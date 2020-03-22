@@ -2,9 +2,7 @@
 /* @var $this ObatController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Obats',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create Obat', 'url'=>array('create')),

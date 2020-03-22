@@ -102,7 +102,7 @@ class TagihanController extends Controller
 			$bayar->id_periksa = $oid;
 			$bayar->save();
 			$ml->bayar_pasien=$_POST['Tagihan']['bayar_tagihan'];
-			$ml->status = "lunas";
+			$ml->status_bayar = "lunas";
 			if($ml->save())
 			Yii::app()->user->setFlash('success', "Data Berhasil Disimpan");
 				$this->redirect(array('index','id'=>$ml->no_tagihan));

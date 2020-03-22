@@ -9,12 +9,7 @@
 ?>
 
 <?php
-/* @var $this PasienController */
-/* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Pegawai',
-);
 
 $this->menu=array(
 	array('label'=>'Create Pegawai', 'url'=>array('create')),
@@ -49,13 +44,15 @@ $this->menu=array(
 				<td><?php echo $model['username']; ?></td>
 				<td><?php echo $model['jabatan']; ?></td>
                 <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$model['id_pegawai']))); ?></td>
-                
             </tr>
             <?php endforeach; ?>
 <tr>
+
     
 <tbody>
 </table>
+<?php $this->widget('CLinkPager', array('pages' => $pages, 'header' => '', 
+'maxButtonCount' => 10)); ?>
 <style>
 .judul{
 

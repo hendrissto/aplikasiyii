@@ -110,6 +110,8 @@ class SiteController extends Controller
 				$this->redirect('index.php?r=tagihan');
 			}elseif($command['jabatan']=="admin"){
 				$this->redirect('index.php?r=pegawai');
+			}elseif($command['jabatan']=="apoteker"){
+				$this->redirect('index.php?r=jualResep');
 			}
 			$this->redirect(Yii::app()->user->returnUrl);
 				

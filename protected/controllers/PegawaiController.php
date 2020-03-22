@@ -18,7 +18,7 @@
 			return array(
 				
 				array('allow', 
-					'actions'=>array('create','update' , 'hapus','index'),
+					'actions'=>array('create','update' , 'hapus','index','delete'),
 					'users'=>array('@'),
 				),
 				
@@ -39,13 +39,29 @@
 		
 		public function actionIndex()
 		{
-			$model=$model=Yii::app()->db->createCommand()
-					->select()
-					->from('pegawai')
-					->queryAll();
+		
+		
+			
+					$count = Pegawai::model()->count();
+					$sql = 'SELECT * FROM pegawai LIMIT :limt OFFSET :ofset';
 
+					$cmd = Yii::app()->db->createCommand($sql);
+			
+					$pages = new CPagination($count);
+					$pages->pageSize = 3;
+			
+					$pages->applyLimit($cmd);
+			
+					$limit = $pages->getLimit();
+			
+					$offset = $pages->getOffset();
+					$cmd->bindValue(':limt', $limit, PDO::PARAM_INT);
+
+					$cmd->bindValue(':ofset', $offset, PDO::PARAM_INT);
+
+					$model = $cmd->queryAll();
 			$this->render('index',array(
-				'pegawai'=>$model
+				'pegawai'=>$model, 'pages'=>$pages
 			));
 		}
 		
@@ -102,6 +118,15 @@
 					throw new CHttpException(404, 'Halaman tidak ditemukan!');
 				}
 		
+		}
+
+		public function actionDelete($id)
+		{
+			$this->loadModel($id)->delete();
+
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect('index.php?r=pegawai');
 		}
 		
 		public function loadModel($id)

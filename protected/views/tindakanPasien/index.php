@@ -2,9 +2,7 @@
 /* @var $this TindakanPasienController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Tindakan Pasiens',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create TindakanPasien', 'url'=>array('create')),

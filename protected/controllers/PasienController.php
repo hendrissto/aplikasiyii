@@ -28,7 +28,7 @@ class PasienController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','delete'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -88,10 +88,9 @@ class PasienController extends Controller
 			$periksa->no_rm = $command['no_rm']+1;
 			$periksa->status = "belum periksa";
 			$periksa->save();
-			
+			$this->redirect(array('index','id'=>$model->no_identitas));
 			}
-			Yii::app()->user->setFlash('success', "Data Berhasil Disimpan");
-				$this->redirect(array('index','id'=>$model->no_identitas));
+				
 		}
 
 		$this->render('create',array(
@@ -128,30 +127,13 @@ class PasienController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($oid, $token)
+	public function actionDelete($id)
 	{
-				$cek = inc::enkrip($oid); // enkrip id agar sama dengan token
-				if($cek == $token)  //cek dulu sama apa engga token sama id
-				{
-					
-					try								// kenapa di try dulu , soal nya pake foreign key , kalo ada id ini  yang terkait sama table lain ga bisa didelete , kalo ga di try dulu pasti error keluar nya :)
-					{
-						$model = $this->loadModel($oid);
-						if($model->delete())
-						{
-							Yii::app()->user->setFlash('success' , 'Data telah dihapus!');
-							$this->redirect(array('index'));
-						}
-					}catch (Exception $e){
-							Yii::app()->user->setFlash('danger' , 'Data gagal dihapus! data ini masih digunakan dengan data lain');
-							$this->redirect(array('index'));
-					}
-				}else{
-					throw new CHttpException(404, 'Halaman tidak ditemukan!');
-				}
-		
+		$this->loadModel($id)->delete();
 
-		
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect('index.php?r=pasien');
 	}
 
 	/**
@@ -159,10 +141,12 @@ class PasienController extends Controller
 	 */
 	public function actionIndex()
 	{
-	$user =	Yii::app()->db->createCommand('SELECT * FROM pasien');
-		$dataProvider=new CActiveDataProvider('Pasien');
+		$user=Yii::app()->db->createCommand()
+				->select()
+				->from('pasien')
+				->queryAll();
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider, 'user'=>$user
+			'user'=>$user
 		));
 	}
 

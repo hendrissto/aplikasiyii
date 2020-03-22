@@ -2,10 +2,6 @@
 /* @var $this PasienController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Pasiens',
-);
-
 $this->menu=array(
 	array('label'=>'Create Pasien', 'url'=>array('create')),
 	array('label'=>'Manage Pasien', 'url'=>array('admin')),
@@ -28,30 +24,35 @@ $this->menu=array(
 		";
 	}
 ?>
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'tes-grid',
-		'dataProvider'=>$dataProvider,
-		'columns'=>array(
-			'no_identitas',
-			'nama_pasien',
-			'tgl_lahir',
-			'alamat_pasien',
-			'no_telp',
-			array(
-				'class'=>'CButtonColumn',
-				'template' => '{update}{hapus}',
-				'buttons' => array(
-					'update' => array(
-						'url' => 'inc::root_url("/update/oid/$data->no_identitas")'
-					),
-				'hapus' => array(
-					'url' => 'inc::root_url("/delete/oid/$data->no_identitas/token/".inc::enkrip($data->no_identitas)."")',
-					'imageUrl' => Yii::app()->baseUrl."/images/delete.png",
-					'options' => array('onclick' => 'return confirm("Anda yakin menghapus data ini ?")')
-				)
-			)
-		),
-		),
-)); ?>
+<table class="table table-bordered">
+<thead>
+<tr>
+	<td style="width:10px;">No Identitas</td>
+    <td style="width:10px;">No RM</td>
+    <td style="width:10px;">Nama Pasien</td>
+    <td style="width:10px;">Alamat Pasien</td>
+	<td style="width:10px;">No Telepon</td>
+	<td style="width:10px;">Tanggal Lahir</td>
+	<td style="width:10px;">Aksi</td>
+</tr>
+</thead>
 
+
+<?php $total_harga=0; foreach ($user as $ml) : ?>
+            <tr>
+				<td><?php echo $ml['no_identitas']; ?></td>
+				<td><?php echo $ml['no_rm']; ?></td>
+                <td><?php echo $ml['nama_pasien']; ?></td>
+				<td><?php echo $ml['alamat_pasien']; ?></td>
+                <td><?php echo $ml['no_telp']; ?></td>
+				<td><?php echo $ml['tgl_lahir']; ?></td>
+                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['no_identitas']))); ?></td>
+                
+            </tr>
+            <?php endforeach; ?>
+<tr>
+<tbody>
+<tr>
+
+</table>
 

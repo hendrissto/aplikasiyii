@@ -2,10 +2,6 @@
 /* @var $this PeriksaPasienController */
 /* @var $model PeriksaPasien */
 
-$this->breadcrumbs=array(
-	'Periksa Pasiens'=>array('index'),
-	'Create',
-);
 
 $this->menu=array(
 	array('label'=>'List PeriksaPasien', 'url'=>array('index')),

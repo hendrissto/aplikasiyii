@@ -2,10 +2,6 @@
 /* @var $this ObatController */
 /* @var $model Obat */
 
-$this->breadcrumbs=array(
-	'Obats'=>array('index'),
-	'Create',
-);
 
 $this->menu=array(
 	array('label'=>'List Obat', 'url'=>array('index')),

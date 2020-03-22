@@ -2,9 +2,7 @@
 /* @var $this PeriksaPasienController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Periksa Pasiens',
-);
+
 
 $this->menu=array(
 	array('label'=>'Create PeriksaPasien', 'url'=>array('create')),

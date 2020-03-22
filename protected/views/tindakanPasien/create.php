@@ -2,10 +2,7 @@
 /* @var $this TindakanPasienController */
 /* @var $model TindakanPasien */
 
-$this->breadcrumbs=array(
-	'Tindakan Pasiens'=>array('index'),
-	'Create',
-);
+
 
 $this->menu=array(
 	array('label'=>'List TindakanPasien', 'url'=>array('index')),

@@ -19,11 +19,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'id_obat'); ?>
-		<?php echo $form->textField($model,'id_obat'); ?>
-		<?php echo $form->error($model,'id_obat'); ?>
-	</div>
+	
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'nama_obat'); ?>

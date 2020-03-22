@@ -1,23 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "pasien".
+ * This is the model class for table "jual_resep".
  *
- * The followings are the available columns in table 'pasien':
- * @property integer $no_identitas
- * @property string $nama_pasien
- * @property string $alamat_pasien
- * @property integer $no_telp
- * @property string $tgl_lahir
+ * The followings are the available columns in table 'jual_resep':
+ * @property integer $id_jual_resep
+ * @property integer $id_periksa
  */
-class Pasien extends CActiveRecord
+class JualResep extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'pasien';
+		return 'jual_resep';
 	}
 
 	/**
@@ -28,14 +25,11 @@ class Pasien extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('no_identitas, nama_pasien, alamat_pasien, no_telp, tgl_lahir', 'required'),
-			array('no_identitas, no_telp', 'numerical', 'integerOnly'=>true),
-			array('nama_pasien, tgl_lahir', 'length', 'max'=>50),
-			array('alamat_pasien', 'length', 'max'=>100),
+			array('id_jual_resep, id_periksa', 'required'),
+			array('id_jual_resep, id_periksa', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('no_identitas, nama_pasien, alamat_pasien, no_telp, tgl_lahir', 'safe', 'on'=>'search'),
-			array('no_identitas', 'noidenvalidasi'),
+			array('id_jual_resep, id_periksa', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,12 +50,8 @@ class Pasien extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'no_identitas' => 'No Identitas',
-			'nama_pasien' => 'Nama Pasien',
-			'alamat_pasien' => 'Alamat Pasien',
-			'no_telp' => 'No Telp',
-			'tgl_lahir' => 'Tgl Lahir',
-			'no_rm' => 'no_rm',
+			'id_jual_resep' => 'Id Jual Resep',
+			'id_periksa' => 'Id Periksa',
 		);
 	}
 
@@ -83,11 +73,8 @@ class Pasien extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('no_identitas',$this->no_identitas);
-		$criteria->compare('nama_pasien',$this->nama_pasien,true);
-		$criteria->compare('alamat_pasien',$this->alamat_pasien,true);
-		$criteria->compare('no_telp',$this->no_telp);
-		$criteria->compare('tgl_lahir',$this->tgl_lahir,true);
+		$criteria->compare('id_jual_resep',$this->id_jual_resep);
+		$criteria->compare('id_periksa',$this->id_periksa);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,26 +85,10 @@ class Pasien extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Pasien the static model class
+	 * @return JualResep the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function noidenvalidasi($attribute)
-	{
-		$data = Yii::app()->db->createCommand()
-				->select('no_identitas')
-				->from('pasien')
-				->queryAll();
-		
-		foreach($data as $d){
-			if($this->$attribute==$d['no_identitas']){
-				$this->addError('no_identitas', 'No Identitas sudah terdaftar');
-				return false;
-			}
-		}				
-		
 	}
 }

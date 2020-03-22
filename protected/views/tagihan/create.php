@@ -7,10 +7,7 @@
         echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     }
 
-$this->breadcrumbs=array(
-	'Tagihans'=>array('index'),
-	'Create',
-);
+
 
 ?>
 

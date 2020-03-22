@@ -25,7 +25,7 @@ class Tindakan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_tindakan, nama_tindakan, harga', 'required'),
+			array('nama_tindakan, harga', 'required'),
 			array('id_tindakan, harga', 'numerical', 'integerOnly'=>true),
 			array('nama_tindakan', 'length', 'max'=>50),
 			// The following rule is used by search().

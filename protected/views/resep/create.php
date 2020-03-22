@@ -2,10 +2,7 @@
 /* @var $this ResepController */
 /* @var $model Resep */
 
-$this->breadcrumbs=array(
-	'Reseps'=>array('index'),
-	'Create',
-);
+
 
 $this->menu=array(
 	array('label'=>'List Resep', 'url'=>array('index')),

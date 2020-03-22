@@ -2,10 +2,7 @@
 /* @var $this PemeriksaanController */
 /* @var $model Pemeriksaan */
 
-$this->breadcrumbs=array(
-	'Pemeriksaans'=>array('index'),
-	'Create',
-);
+
 
 $this->menu=array(
 	array('label'=>'List Pemeriksaan', 'url'=>array('index')),

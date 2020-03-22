@@ -71,7 +71,7 @@ class ObatController extends Controller
 		{
 			$model->attributes=$_POST['Obat'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_obat));
+				$this->redirect(array('index','id'=>$model->id_obat));
 		}
 
 		$this->render('create',array(
