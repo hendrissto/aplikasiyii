@@ -25,11 +25,11 @@ class JualResep extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_jual_resep, id_periksa', 'required'),
+			array(' id_periksa, status_resep', 'required'),
 			array('id_jual_resep, id_periksa', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_jual_resep, id_periksa', 'safe', 'on'=>'search'),
+			array('id_jual_resep, id_periksa, status_resep', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +52,7 @@ class JualResep extends CActiveRecord
 		return array(
 			'id_jual_resep' => 'Id Jual Resep',
 			'id_periksa' => 'Id Periksa',
+			'status_resep' => 'Status Resep',
 		);
 	}
 
@@ -75,6 +76,7 @@ class JualResep extends CActiveRecord
 
 		$criteria->compare('id_jual_resep',$this->id_jual_resep);
 		$criteria->compare('id_periksa',$this->id_periksa);
+		$criteria->compare('status_resep',$this->status_resep);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

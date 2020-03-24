@@ -1,4 +1,4 @@
-protected/views/tagihan/cetak.php<?php
+<?php
 /* @var $this TagihanController */
 /* @var $model Tagihan */
 
@@ -7,10 +7,7 @@ protected/views/tagihan/cetak.php<?php
         echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     }
 
-$this->breadcrumbs=array(
-	'Tagihans'=>array('index'),
-	'Create',
-);
+
 
 ?>
 
@@ -122,7 +119,7 @@ $this->breadcrumbs=array(
 <div>
         <?php
 $this->widget('ext.mPrint.mPrint', array(
-    'title' => 'Pembayaran',        //the title of the document. Defaults to the HTML title
+    'title' => 'Hasil Pemeriksaan',        //the title of the document. Defaults to the HTML title
     'tooltip' => 'User Result',    //tooltip message of the print icon. Defaults to 'print'
     'text' => 'Print Results', //text which will appear beside the print icon. Defaults to NULL
     'element' => '#resultprint',      //the element to be printed.

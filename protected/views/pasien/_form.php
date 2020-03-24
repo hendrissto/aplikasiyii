@@ -29,7 +29,11 @@
 		<?php echo $form->textField($model,'nama_pasien',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'nama_pasien'); ?>
 	</div>
-
+	<div class="row">
+		<?php echo $form->labelEx($model,'jenis_kelamin'); ?>
+		<?php echo $form->dropDownList($model, 'jenis_kelamin', $model->getTypeOptions()); ?>
+		<?php echo $form->error($model,'jenis_kelamin'); ?>
+	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'alamat_pasien'); ?>
 		<?php echo $form->textField($model,'alamat_pasien',array('size'=>60,'maxlength'=>100)); ?>

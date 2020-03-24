@@ -70,6 +70,13 @@ class ResepController extends Controller
 					->queryRow();
 		$model=new Resep;
 
+		$c = Yii::app()->db->createCommand()
+					->select()
+					->from('periksa_pasien pp')
+					->join('pasien p','p.no_rm=pp.no_rm')
+					->where('pp.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
+					->queryRow();
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -105,6 +112,21 @@ class ResepController extends Controller
 			$per = PeriksaPasien::model()->findByPk($oid);
 			$per->status= "sudah periksa";
 			$per->save();
+
+			$rp = Yii::app()->db->createCommand()
+					->select()
+					->from('jual_resep')
+					->where('id_periksa=:id_periksa', array(':id_periksa'=>$oid))
+					->queryAll();
+
+			if($rp == null){
+				$res = new JualResep;
+				$res->id_periksa= $oid;
+				$res->status_resep= "belum diserahkan";
+				$res->save();
+			}
+			
+
 			$model->attributes=$_POST['Resep'];
 			$model->id_periksa=$oid;
 			if($model->save())

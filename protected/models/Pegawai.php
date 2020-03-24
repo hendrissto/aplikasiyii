@@ -120,7 +120,7 @@ class Pegawai extends CActiveRecord
 
 	public function getTypeOptions()
  	{
-      return CHtml::listData(Lookup::model()->findAll(),'value','nama_lookup');
+		return CHtml::listData(Lookup::model()->findAll('type=:type', array(':type'=>"jabatan")),'value','nama_lookup');
 	}
 	
 	public function namavalidasi($attribute)

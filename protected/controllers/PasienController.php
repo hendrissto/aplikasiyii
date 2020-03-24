@@ -88,7 +88,7 @@ class PasienController extends Controller
 			$periksa->no_rm = $command['no_rm']+1;
 			$periksa->status = "belum periksa";
 			$periksa->save();
-			$this->redirect(array('index','id'=>$model->no_identitas));
+			$this->redirect(array('index','id'=>$model->no_identitas));	
 			}
 				
 		}
@@ -130,7 +130,7 @@ class PasienController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
+		$this->loadData($id)->delete();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect('index.php?r=pasien');
@@ -175,6 +175,14 @@ class PasienController extends Controller
 	public function loadModel($id)
 	{
 		$model=Pasien::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+
+	public function loadData($id)
+	{
+		$model=PeriksaPasien::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

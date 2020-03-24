@@ -28,13 +28,13 @@ class Pasien extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('no_identitas, nama_pasien, alamat_pasien, no_telp, tgl_lahir', 'required'),
+			array('no_identitas, nama_pasien, jenis_kelamin, alamat_pasien, no_telp, tgl_lahir', 'required'),
 			array('no_identitas, no_telp', 'numerical', 'integerOnly'=>true),
 			array('nama_pasien, tgl_lahir', 'length', 'max'=>50),
 			array('alamat_pasien', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('no_identitas, nama_pasien, alamat_pasien, no_telp, tgl_lahir', 'safe', 'on'=>'search'),
+			array('no_identitas, nama_pasien, jenis_kelamin, alamat_pasien, no_telp, tgl_lahir', 'safe', 'on'=>'search'),
 			array('no_identitas', 'noidenvalidasi'),
 		);
 	}
@@ -58,6 +58,7 @@ class Pasien extends CActiveRecord
 		return array(
 			'no_identitas' => 'No Identitas',
 			'nama_pasien' => 'Nama Pasien',
+			'jenis_kelamin' => 'Jenis Kelamin',
 			'alamat_pasien' => 'Alamat Pasien',
 			'no_telp' => 'No Telp',
 			'tgl_lahir' => 'Tgl Lahir',
@@ -85,6 +86,7 @@ class Pasien extends CActiveRecord
 
 		$criteria->compare('no_identitas',$this->no_identitas);
 		$criteria->compare('nama_pasien',$this->nama_pasien,true);
+		$criteria->compare('jenis_kelamin',$this->jenis_kelamin,true);
 		$criteria->compare('alamat_pasien',$this->alamat_pasien,true);
 		$criteria->compare('no_telp',$this->no_telp);
 		$criteria->compare('tgl_lahir',$this->tgl_lahir,true);
@@ -119,5 +121,10 @@ class Pasien extends CActiveRecord
 			}
 		}				
 		
+	}
+
+	public function getTypeOptions()
+ 	{
+		return CHtml::listData(Lookup::model()->findAll('type=:type', array(':type'=>"jenis_kelamin")),'value','nama_lookup');
 	}
 }

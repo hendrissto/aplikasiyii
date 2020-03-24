@@ -30,6 +30,7 @@ $this->menu=array(
 	<td style="width:10px;">No Identitas</td>
     <td style="width:10px;">No RM</td>
     <td style="width:10px;">Nama Pasien</td>
+	<td style="width:10px;">Jenis Kelamin</td>
     <td style="width:10px;">Alamat Pasien</td>
 	<td style="width:10px;">No Telepon</td>
 	<td style="width:10px;">Tanggal Lahir</td>
@@ -43,6 +44,7 @@ $this->menu=array(
 				<td><?php echo $ml['no_identitas']; ?></td>
 				<td><?php echo $ml['no_rm']; ?></td>
                 <td><?php echo $ml['nama_pasien']; ?></td>
+				<td><?php echo $ml['jenis_kelamin']; ?></td>
 				<td><?php echo $ml['alamat_pasien']; ?></td>
                 <td><?php echo $ml['no_telp']; ?></td>
 				<td><?php echo $ml['tgl_lahir']; ?></td>
