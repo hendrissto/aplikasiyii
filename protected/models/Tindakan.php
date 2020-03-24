@@ -68,7 +68,7 @@ class Tindakan extends CActiveRecord
 	 * - Pass data provider to CGridView, CListView or any similar widget.
 	 *
 	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
+	 * based on the search/filter conditions. test
 	 */
 	public function search()
 	{
