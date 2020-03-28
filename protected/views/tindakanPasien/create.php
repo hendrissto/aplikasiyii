@@ -10,25 +10,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Tindakan Pasien</h1>
-<table>
-<tr>
-
-    <td>Nama Pasien: <?php echo $pasien['nama_pasien'];?><td>
-    <td style="width: 100px;"></td>
-    <td>Alamat: <?php echo $pasien['alamat_pasien'];?><td>
-</tr>
-<tr>
-
-    <td>No RM: <?php echo $pasien['no_rm'];?><td>
-    <td style="width: 100px;"></td>
-    <td>No Telepon: <?php echo $pasien['no_telp'];?><td>
-</tr>
-<tr>
-
-    <td>Tanggal Lahir: <?php echo $pasien['tgl_lahir'];?><td>
-</tr>
-</table>
+<?php $this->renderPartial('header', array('pasien'=>$pasien)); ?>
 <h1>Tindakan</h1>
 <?php
 	foreach(Yii::app()->user->getFlashes() as $key => $val)
@@ -62,9 +44,6 @@ $this->menu=array(
             </tr>
             <?php endforeach; ?>
 <tr>
-    <td></td>
-    <td>Total</td>
-    <td><?php echo $total_harga;?></td>
 <tbody>
 <tr>
 

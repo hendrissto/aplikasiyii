@@ -19,8 +19,6 @@ $this->menu=array(
             <td>Tgl Lahir</td>
             <td>Status Periksa</td>
             <td>Periksa</td>
-            <td>Tindakan</td>
-			<td>Reseptur</td>
             <td>Hasil</td>
         </tr>
     </thead>
@@ -39,8 +37,6 @@ $this->menu=array(
                  <?php } ?>
                  </td>
                  <td><?php echo CHtml::link('<img style="width:50px; height:50px;" src="images/periksa.png"></img>' , array('/pemeriksaan/create/oid/'.$team['id_periksa'])); ?></td>
-				<td><?php echo CHtml::link('<img style="width:50px; height:50px;" src="images/tindakan.png"></img>' , array('/tindakanPasien/create/oid/'.$team['id_periksa'])); ?></td>
-                <td><?php echo CHtml::link('<img style="width:50px; height:50px;" src="images/resep.png"></img>' , array('/resep/create/oid/'.$team['id_periksa'])); ?></td>
                 <td><?php echo CHtml::link('<img style="width:50px; height:50px;" src="images/hasil.jpg"></img>' , array('/periksaPasien/hasil/oid/'.$team['id_periksa'])); ?></td>
             </tr>
         <?php endforeach; ?>

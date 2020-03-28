@@ -58,3 +58,74 @@ $this->menu=array(
 
 </table>
 
+<?php
+echo CHtml::button(
+	'Documentation',
+	array(
+		'onclick' => '$("#dialog-animation").dialog("open"); return false;',
+		'style' => 'position:relative; bottom:4px; right:0;',
+	)
+	);
+?>	
+
+
+<?php
+ $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+		'id' => 'dialog-animation',
+		'options' => array(
+			'title' => 'Access Control List Using Yii Framework',
+			'autoOpen' => false,
+			'show' => array(
+				'effect' => 'blind',
+				'duration' => 100,
+			),
+			'hide' => array(
+				'effect' => 'blind',
+				'duration' => 100,
+			),
+			),
+
+		)
+		
+	);
+ ?>
+
+ <div class="a" style="width=1000px;">
+ <table class="table table-bordered">
+<thead>
+<tr>
+	<td style="width:10px;">No Identitas</td>
+    <td style="width:10px;">No RM</td>
+    <td style="width:10px;">Nama Pasien</td>
+	<td style="width:10px;">Jenis Kelamin</td>
+    <td style="width:10px;">Alamat Pasien</td>
+	<td style="width:10px;">No Telepon</td>
+	<td style="width:10px;">Tanggal Lahir</td>
+	<td style="width:10px;">Aksi</td>
+</tr>
+</thead>
+
+
+<?php $total_harga=0; foreach ($user as $ml) : ?>
+            <tr>
+				<td><?php echo $ml['no_identitas']; ?></td>
+				<td><?php echo $ml['no_rm']; ?></td>
+                <td><?php echo $ml['nama_pasien']; ?></td>
+				<td><?php echo $ml['jenis_kelamin']; ?></td>
+				<td><?php echo $ml['alamat_pasien']; ?></td>
+                <td><?php echo $ml['no_telp']; ?></td>
+				<td><?php echo $ml['tgl_lahir']; ?></td>
+                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['no_identitas']))); ?></td>
+                
+            </tr>
+            <?php endforeach; ?>
+<tr>
+<tbody>
+<tr>
+
+</table>
+</div>
+
+<?php 
+	$this->endWidget('zii.widgets.zui.CJuiDialog');
+?>

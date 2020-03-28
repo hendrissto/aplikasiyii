@@ -63,20 +63,29 @@ class PemeriksaanController extends Controller
 	public function actionCreate($oid)
 	{
 		$model=new Pemeriksaan;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$c = Yii::app()->db->createCommand()
+					->select()
+					->from('periksa_pasien pp')
+					->join('pasien p','p.no_rm=pp.no_rm')
+					->where('pp.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
+					->queryRow();
+		$pemer = Yii::app()->db->createCommand()
+					->select()
+					->from('pemeriksaan p')
+					->join('periksa_pasien pp','pp.id_periksa = p.id_periksa')
+					->where('p.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
+					->queryAll();
 
 		if(isset($_POST['Pemeriksaan']))
 		{
 			$model->attributes=$_POST['Pemeriksaan'];
 			$model->id_periksa=$oid;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_pemeriksaan));
+				$this->redirect(array('/pemeriksaan/create/oid/'.$oid,'id'=>$model->id_pemeriksaan));
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model, 'pasien'=>$c, 'pemer' => $pemer
 		));
 	}
 

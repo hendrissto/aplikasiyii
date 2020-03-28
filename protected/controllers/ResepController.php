@@ -70,12 +70,13 @@ class ResepController extends Controller
 					->queryRow();
 		$model=new Resep;
 
-		$c = Yii::app()->db->createCommand()
+		$res = Yii::app()->db->createCommand()
 					->select()
-					->from('periksa_pasien pp')
-					->join('pasien p','p.no_rm=pp.no_rm')
-					->where('pp.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
-					->queryRow();
+					->from('resep r')
+					->join('obat o','r.id_obat = o.id_obat')
+					->where('r.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
+					->queryAll();
+
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -130,11 +131,11 @@ class ResepController extends Controller
 			$model->attributes=$_POST['Resep'];
 			$model->id_periksa=$oid;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->kode_resep));
+				$this->redirect(array('/resep/create/oid/'.$oid,'id'=>$model->kode_resep));
 		}
 
 		$this->render('create',array(
-			'model'=>$model, 'pasien'=>$c
+			'model'=>$model, 'pasien'=>$c, 'res' => $res
 		));
 	}
 

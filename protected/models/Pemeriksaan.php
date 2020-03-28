@@ -31,11 +31,11 @@ class Pemeriksaan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array(' keluhan, riwayat_keluarga, riwayat_obat, periksa_fisik, tekanan_darah, suhu_tubuh, detak_jantung', 'required'),
+			array(' keluhan, riwayat_keluarga, riwayat_obat, periksa_fisik, tekanan_darah, suhu_tubuh, detak_jantung,  tanggal_pemeriksaan, dokter', 'required'),
 			array('id_pemeriksaan', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pemeriksaan, keluhan, riwayat_keluarga, riwayat_obat, periksa_fisik, tekanan_darah, suhu_tubuh, detak_jantung', 'safe', 'on'=>'search'),
+			array('id_pemeriksaan, keluhan, riwayat_keluarga, riwayat_obat, periksa_fisik, tekanan_darah, suhu_tubuh, detak_jantung, tanggal_pemeriksaan, dokter', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +65,8 @@ class Pemeriksaan extends CActiveRecord
 			'suhu_tubuh' => 'Suhu Tubuh',
 			'detak_jantung' => 'Detak Jantung',
 			'id_periksa' => 'ID Periksa',
+			'tanggal_pemeriksaan' => 'Tanggal Pemeriksaan',
+			'dokter' => 'Dokter',
 		);
 	}
 
@@ -95,6 +97,8 @@ class Pemeriksaan extends CActiveRecord
 		$criteria->compare('suhu_tubuh',$this->suhu_tubuh,true);
 		$criteria->compare('detak_jantung',$this->detak_jantung,true);
 		$criteria->compare('id_periksa',$this->id_periksa,true);
+		$criteria->compare('tanggal_pemeriksaan',$this->tanggal_pemeriksaan);
+		$criteria->compare('dokter',$this->dokter);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -110,5 +114,10 @@ class Pemeriksaan extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function getTypeOptions()
+ 	{
+		return CHtml::listData(Pegawai::model()->findAll('jabatan=:jabatan', array(':jabatan'=>"dokter")),'nama_pegawai','nama_pegawai');
 	}
 }

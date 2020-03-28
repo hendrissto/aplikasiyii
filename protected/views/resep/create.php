@@ -10,23 +10,31 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Resep</h1>
-<table>
+<?php $this->renderPartial('header', array('pasien'=>$pasien)); ?>
+<table class="table table-bordered">
+<thead>
+<tr>
+    <td style="width:100px;">Tanggal</td>
+    <td style="width:150px;">Nama Tindakan</td>
+    <td style="width:10px;">Harga</td>
+    <td style="width:10px;">Aksi</td>
+</tr>
+</thead>
+
+
+<?php $total_harga=0; foreach ($res as $ml) : ?>
+            <tr>
+                <td><?php echo $ml['tgl_resep']; ?></td>
+                <td><?php echo $ml['nama_obat']; ?></td>
+                <td><?php echo $ml['jumlah']; ?></td>
+                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['id_periksa']))); ?></td>
+                <?php $total_harga=$total_harga + $ml['harga'];?>
+            </tr>
+            <?php endforeach; ?>
+<tr>
+<tbody>
 <tr>
 
-    <td>Nama Pasien: <?php echo $pasien['nama_pasien'];?><td>
-    <td style="width: 100px;"></td>
-    <td>Alamat: <?php echo $pasien['alamat_pasien'];?><td>
-</tr>
-<tr>
-
-    <td>No RM: <?php echo $pasien['no_rm'];?><td>
-    <td style="width: 100px;"></td>
-    <td>No Telepon: <?php echo $pasien['no_telp'];?><td>
-</tr>
-<tr>
-
-    <td>Tanggal Lahir: <?php echo $pasien['tgl_lahir'];?><td>
-</tr>
 </table>
+<h1> Resep</h1>
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

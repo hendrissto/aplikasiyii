@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div style="margin-left:50px;">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'resep-form',
@@ -15,7 +15,6 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
