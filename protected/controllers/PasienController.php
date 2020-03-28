@@ -129,8 +129,15 @@ class PasienController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		$c = Yii::app()->db->createCommand()
+					->select()
+					->from('periksa_pasien pp')
+					->join('pasien p','p.no_rm=pp.no_rm')
+					->where('p.no_identitas=:no_identitas', array(':no_identitas'=>$id))
+					->queryRow();		
+		$this->loadData($c['id_periksa'])->delete();
 		$this->loadModel($id)->delete();
-		$this->loadData($id)->delete();
+		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect('index.php?r=pasien');
