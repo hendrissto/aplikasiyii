@@ -28,7 +28,7 @@ class PemeriksaanController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','delete'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,7 +36,7 @@ class PemeriksaanController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -94,9 +94,21 @@ class PemeriksaanController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($id, $data)
 	{
 		$model=$this->loadModel($id);
+		$c = Yii::app()->db->createCommand()
+					->select()
+					->from('periksa_pasien pp')
+					->join('pasien p','p.no_rm=pp.no_rm')
+					->where('pp.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryRow();
+		$pemer = Yii::app()->db->createCommand()
+					->select()
+					->from('pemeriksaan p')
+					->join('periksa_pasien pp','pp.id_periksa = p.id_periksa')
+					->where('p.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryAll();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -105,11 +117,12 @@ class PemeriksaanController extends Controller
 		{
 			$model->attributes=$_POST['Pemeriksaan'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_pemeriksaan));
+				$this->redirect(array('/pemeriksaan/create/oid/'.$oid,'id'=>$model->id_pemeriksaan, 
+				'pasien'=>$c, 'pemer' => $pemer));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model, 'pasien'=>$c, 'pemer' => $pemer
 		));
 	}
 
@@ -118,13 +131,25 @@ class PemeriksaanController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($id, $data)
 	{
-		$this->loadModel($id)->delete();
+		$pemer = Yii::app()->db->createCommand()
+					->select()
+					->from('pemeriksaan p')
+					->join('periksa_pasien pp','pp.id_periksa = p.id_periksa')
+					->where('p.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryAll();
+		try {
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->loadModel($id)->delete();
+	
+			return $this->redirect('index.php?r=pemeriksaan/create/oid/'.$data, array('pemer'=> $pemer));
+	
+		} catch(CDbException $e) {
+	
+			echo 'Please remove this category from articles to delete this category.';
+	
+		}
 	}
 
 	/**

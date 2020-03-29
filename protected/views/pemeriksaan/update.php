@@ -1,21 +1,31 @@
-<?php
-/* @var $this PemeriksaanController */
-/* @var $model Pemeriksaan */
 
-$this->breadcrumbs=array(
-	'Pemeriksaans'=>array('index'),
-	$model->id_pemeriksaan=>array('view','id'=>$model->id_pemeriksaan),
-	'Update',
-);
+<?php $this->renderPartial('header', array('pasien'=>$pasien)); ?>
+<table class="table table-bordered">
+<thead>
+<tr>
+	<td style="width:150px;">Tanggal</td>
+	<td style="width:150px;">Dokter</td>
+    <td style="width:10px;">Aksi</td>
+</tr>
+</thead>
 
-$this->menu=array(
-	array('label'=>'List Pemeriksaan', 'url'=>array('index')),
-	array('label'=>'Create Pemeriksaan', 'url'=>array('create')),
-	array('label'=>'View Pemeriksaan', 'url'=>array('view', 'id'=>$model->id_pemeriksaan)),
-	array('label'=>'Manage Pemeriksaan', 'url'=>array('admin')),
-);
-?>
 
-<h1>Update Pemeriksaan <?php echo $model->id_pemeriksaan; ?></h1>
+<?php foreach ($pemer as $ml) : ?>
+            <tr>
+                <td><?php echo $ml['tanggal_pemeriksaan']; ?></td>
+				<td><?php echo $ml['dokter']; ?></td>
+				
+                <td>
+				<?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/edit.png"></img>', '#', array( 'submit'=>array('update','id'=>$ml['id_pemeriksaan'],'data'=>$ml['id_periksa']))); ?> | 
+<?php echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['id_pemeriksaan'],'data'=>$ml['id_periksa']))); ?></td>
+                
+            </tr>
+            <?php endforeach; ?>
+<tr>
+<tbody>
+<tr>
+
+</table>
+<h1>Detail Pemeriksaan <?php echo $model->id_pemeriksaan; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

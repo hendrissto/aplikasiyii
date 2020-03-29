@@ -28,7 +28,7 @@ class ResepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','delete'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,7 +36,7 @@ class ResepController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -168,13 +168,25 @@ class ResepController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($id, $data)
 	{
-		$this->loadModel($id)->delete();
+		$res = Yii::app()->db->createCommand()
+					->select()
+					->from('resep r')
+					->join('obat o','r.id_obat = o.id_obat')
+					->where('r.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryAll();
+		try {
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->loadModel($id)->delete();
+	
+			return $this->redirect('index.php?r=resep/create/oid/'.$data, array('res'=> $res));
+	
+		} catch(CDbException $e) {
+	
+			echo 'Please remove this category from articles to delete this category.';
+	
+		}
 	}
 
 	/**

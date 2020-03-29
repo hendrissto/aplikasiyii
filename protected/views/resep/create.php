@@ -15,8 +15,8 @@ $this->menu=array(
 <thead>
 <tr>
     <td style="width:100px;">Tanggal</td>
-    <td style="width:150px;">Nama Tindakan</td>
-    <td style="width:10px;">Harga</td>
+    <td style="width:150px;">Nama Obat</td>
+    <td style="width:10px;">Jumlah</td>
     <td style="width:10px;">Aksi</td>
 </tr>
 </thead>
@@ -27,7 +27,7 @@ $this->menu=array(
                 <td><?php echo $ml['tgl_resep']; ?></td>
                 <td><?php echo $ml['nama_obat']; ?></td>
                 <td><?php echo $ml['jumlah']; ?></td>
-                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['id_periksa']))); ?></td>
+                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/delete.png"></img>', '#', array('confirm' => 'Are you sure?', 'submit'=>array('delete','id'=>$ml['kode_resep'], 'data'=>$ml['id_periksa']))); ?></td>
                 <?php $total_harga=$total_harga + $ml['harga'];?>
             </tr>
             <?php endforeach; ?>
