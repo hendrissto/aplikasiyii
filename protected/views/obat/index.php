@@ -4,10 +4,7 @@
 
 
 
-$this->menu=array(
-	array('label'=>'Create Obat', 'url'=>array('create')),
-	array('label'=>'Manage Obat', 'url'=>array('admin')),
-);
+
 ?>
 
 <h1>Obat</h1>

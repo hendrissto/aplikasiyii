@@ -18,18 +18,12 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'id_jual_resep'); ?>
-		<?php echo $form->textField($model,'id_jual_resep'); ?>
+		<?php echo $form->hiddenField($model,'id_jual_resep',array('type'=>"hidden",'size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'id_jual_resep'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'id_periksa'); ?>
-		<?php echo $form->textField($model,'id_periksa'); ?>
-		<?php echo $form->error($model,'id_periksa'); ?>
-	</div>
+	
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

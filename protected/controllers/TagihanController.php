@@ -240,7 +240,6 @@ class TagihanController extends Controller
 					->select()
 					->from('tindakan_pasien tp')
 					->join('tindakan tn','tn.id_tindakan = tp.id_tindakan')
-					->join('tarif_tindakan tt','tt.id_tindakan = tn.id_tindakan')
 					->join('periksa_pasien pp','pp.id_periksa = tp.id_periksa')
 					->where('tp.id_periksa=:id_periksa', array(':id_periksa'=>$oid))
 					->queryAll();

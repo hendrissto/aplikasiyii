@@ -60,22 +60,36 @@ class JualResepController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id, $data)
 	{
-		$model=new JualResep;
+		$model=$this->loadModel($id);
 
+		$pasien=Yii::app()->db->createCommand()
+					->select()
+					->from('jual_resep jr')
+					->join('periksa_pasien pp','pp.id_periksa = jr.id_periksa')
+					->join('pasien p','p.no_rm = pp.no_rm')
+					->where('pp.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryAll();
+		$res = Yii::app()->db->createCommand()
+					->select()
+					->from('resep r')
+					->join('obat o','r.id_obat = o.id_obat')
+					->where('r.id_periksa=:id_periksa', array(':id_periksa'=>$data))
+					->queryAll();
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['JualResep']))
 		{
 			$model->attributes=$_POST['JualResep'];
+			$model->status_resep='sudah diserahkan';
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_jual_resep));
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model, 'res'=>$res
 		));
 	}
 
@@ -122,9 +136,14 @@ class JualResepController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('JualResep');
+		$model=Yii::app()->db->createCommand()
+					->select()
+					->from('jual_resep jr')
+					->join('periksa_pasien pp','pp.id_periksa = jr.id_periksa')
+					->join('pasien p','p.no_rm = pp.no_rm')
+					->queryAll();
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'jual_resep'=>$model,
 		));
 	}
 

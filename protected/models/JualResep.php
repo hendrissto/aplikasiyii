@@ -25,7 +25,6 @@ class JualResep extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array(' id_periksa, status_resep', 'required'),
 			array('id_jual_resep, id_periksa', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -50,8 +49,6 @@ class JualResep extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_jual_resep' => 'Id Jual Resep',
-			'id_periksa' => 'Id Periksa',
 			'status_resep' => 'Status Resep',
 		);
 	}
