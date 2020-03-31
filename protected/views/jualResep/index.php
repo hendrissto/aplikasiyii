@@ -25,8 +25,13 @@
                         <div class="belum"><p class="tulisan">Belum diserahkan</p></div>
                 <?php }else{?>
                         <div class="pulang"><p class="tulisan">Sudah Diserahkan</p></div>
-                <?php } ?>                        
-                <td><?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/edit.png"></img>', '#', array( 'submit'=>array('create','id'=>$model['id_jual_resep'],'data'=>$model['id_periksa']))); ?></td>
+                <?php } ?> </td> 
+                <td><?php if ($model['status_resep'] == "belum diserahkan"){?>
+                    <?php  echo CHtml::link('<img style="width:15px; height:15px;" src="images/edit.png"></img>', '#', array( 'submit'=>array('create','id'=>$model['id_jual_resep'],'data'=>$model['id_periksa']))); ?>
+                <?php }else{?>
+                        
+                <?php } ?> </td>                      
+            
                 
             </tr>
             <?php endforeach; ?>
