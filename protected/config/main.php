@@ -5,11 +5,12 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Klinik Sederhana',
-
+	'theme'=>'tampilan',	
+	'defaultController' => 'site', 
 	// preloading 'log' component
 	'preload'=>array('log'),
 
@@ -19,31 +20,13 @@ return array(
 		'application.components.*',
 	),
 	
-	'theme'=>'bootstrap',
-	'modules'=>array(
-
-		'gii'=>array(
-            'generatorPaths'=>array(
-            'bootstrap.gii',
-      ),
-        ),
-		
-		// uncomment the following to enable the Gii tool
-		/*
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
-			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
-		*/
-	),
-
+	
+	
 	// application components
 	'components'=>array(
 
 		'bootstrap'=>array(
-            'class'=>'bootstrap.components.Bootstrap',
+            'class'=>'application.extensions.bootstrap.components.Bootstrap',
         ),
 
 		'user'=>array(

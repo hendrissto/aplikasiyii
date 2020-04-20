@@ -5,7 +5,7 @@ class SiteController extends Controller
 	/**
 	 * Declares class-based actions.
 	 */
-	public $layout='//layouts/pendaftaran';
+	
 	
 	public function actions()
 	{
