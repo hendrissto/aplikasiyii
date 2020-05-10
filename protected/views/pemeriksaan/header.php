@@ -17,7 +17,7 @@
     <td>Tanggal Lahir: <?php echo $pasien['tgl_lahir'];?><td>
 </tr>
 </table>
-<nav>
+<nav class="navi">
     <ul>
 <li><?php echo CHtml::link('pemeriksaan' , array('/pemeriksaan/create/oid/'.$pasien['id_periksa'])); ?></a></li>
 <li><?php echo CHtml::link('Tindakan' , array('/tindakanPasien/create/oid/'.$pasien['id_periksa'])); ?></a></li>
@@ -27,33 +27,33 @@
 
 <style>
 
-    nav {
+    .navi {
         margin:auto;
         text-align: center;
         width: 100%;
         font-family: arial;
     } 
 
-    nav ul {
+    .navi ul {
         background:#4f9bc6;
         list-style: none;
         display: inline-table;
         width: 100%;
      }
 
-    nav ul li{
+    .navi ul li{
         float:left;
     }
 
-    nav ul li:hover{
+    .navi ul li:hover{
         background:#78b5d8;
     }
 
-    nav ul li:hover a{
+    .navi ul li:hover a{
         color:#fff;
     }
 
-    nav ul li a{
+    .navi ul li a{
         display: block;
         padding: 10px;
         color: #fff;

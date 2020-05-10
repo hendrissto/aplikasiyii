@@ -1,15 +1,4 @@
-<?php
-/* @var $this PeriksaPasienController */
-/* @var $dataProvider CActiveDataProvider */
-
-
-
-$this->menu=array(
-	array('label'=>'Create PeriksaPasien', 'url'=>array('create')),
-	array('label'=>'Manage PeriksaPasien', 'url'=>array('admin')),
-);
-?>
-<html>
+<?php $this->renderPartial('menu_periksapasien'); ?>
 <h1>Periksa Pasiens</h1>
 <table class="table table-bordered table-striped">
     <thead>
@@ -42,35 +31,5 @@ $this->menu=array(
         <?php endforeach; ?>
     </tbody>
 </table>
-<style>
-.belum {
-    width: 150px;
-    height: 40px;
-    border: 4px solid black;
-    border-radius: 10px;
-    background-color: red;
-    
-}
-.sudah {
-    width: 150px;
-    height: 40px;
-    border: 4px solid black;
-    border-radius: 10px;
-    background-color: green;   
-}
 
-.pulang {
-    width: 150px;
-    height: 40px;
-    border: 4px solid black;
-    border-radius: 10px;
-    background-color: blue;
-    
-}
-
-.tulisan{
-    text-align: center;
-    padding-top: 9px;
-    color: white;
-}
-</style>
+<?php $this->renderPartial('footer_pp'); ?>

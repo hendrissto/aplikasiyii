@@ -1,14 +1,4 @@
-<?php
-/* @var $this PemeriksaanController */
-/* @var $model Pemeriksaan */
-
-
-
-$this->menu=array(
-	array('label'=>'List Pemeriksaan', 'url'=>array('index')),
-	array('label'=>'Manage Pemeriksaan', 'url'=>array('admin')),
-);
-?>
+<?php $this->renderPartial('menu_periksapasien'); ?>
 <?php $this->renderPartial('header', array('pasien'=>$pasien)); ?>
 <h1>Riwayat Pemeriksaan</h1>
 <table class="table table-bordered">
@@ -41,5 +31,5 @@ $this->menu=array(
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
 
 
-
+<?php $this->renderPartial('footer_pp'); ?>
 

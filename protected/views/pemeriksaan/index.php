@@ -1,14 +1,4 @@
-<?php
-/* @var $this PemeriksaanController */
-/* @var $dataProvider CActiveDataProvider */
-
-
-
-$this->menu=array(
-	array('label'=>'Create Pemeriksaan', 'url'=>array('create')),
-	array('label'=>'Manage Pemeriksaan', 'url'=>array('admin')),
-);
-?>
+<?php $this->renderPartial('periksaPasien/menu_periksapasien.php'); ?>
 
 <h1>Pemeriksaans</h1>
 

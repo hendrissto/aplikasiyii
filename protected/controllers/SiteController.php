@@ -32,8 +32,41 @@ class SiteController extends Controller
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 
-		
-		$this->render('index');
+		$model=new LoginForm;
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+
+		// collect user input data
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->login()){
+			$command = Yii::app()->db->createCommand()
+					->select('jabatan')
+					->from('pegawai')
+					->where('username=:username', array(':username'=>$model->username))
+					->queryRow();
+
+			if($command['jabatan']=="dokter"){
+				$this->redirect('index.php?r=periksaPasien');
+			}elseif($command['jabatan']=="pendaftaran"){
+				$this->redirect('index.php?r=pasien');
+			}elseif($command['jabatan']=="kasir"){
+				$this->redirect('index.php?r=tagihan');
+			}elseif($command['jabatan']=="admin"){
+				$this->redirect('index.php?r=pegawai');
+			}elseif($command['jabatan']=="apoteker"){
+				$this->redirect('index.php?r=jualResep');
+			}
+			$this->redirect(Yii::app()->user->returnUrl);
+				
+		}
+	}
+		$this->render('index',array('model'=>$model));
 	}
 
 	/**

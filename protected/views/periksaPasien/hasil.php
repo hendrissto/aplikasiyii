@@ -10,7 +10,7 @@
 
 
 ?>
-
+<?php $this->renderPartial('menu_periksapasien'); ?>
 <div id="resultprint">
 <h1 align="center">Hasil Pemeriksaan</h1>
 
@@ -136,3 +136,4 @@ $this->widget('ext.mPrint.mPrint', array(
 
 </tbody>
 
+<?php $this->renderPartial('footer_pp'); ?>
